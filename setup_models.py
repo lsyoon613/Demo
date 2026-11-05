@@ -21,6 +21,8 @@ ASSETS = {
     "zinc_stock.hdf5": ("https://ndownloader.figshare.com/files/23086469",
                         "99d39a6f807c3e815487500bafc2b4a9dc66a31af189e3b1776874fb0d4a188d"),
 }
+SIZES = {"uspto_model.onnx": 91518243, "uspto_templates.csv.gz": 3313598,
+         "uspto_filter_model.onnx": 16788859, "zinc_stock.hdf5": 663232280}
 
 
 def digest(path: Path) -> str:
@@ -28,7 +30,7 @@ def digest(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def download(name: str, url: str, expected: str) -> None:
+def download(name: str, url: str, expected: str, expected_size: int) -> None:
     destination = MODELS / name
     if destination.is_file() and digest(destination) == expected:
         print(f"OK (already verified): {name}", flush=True)
@@ -38,6 +40,8 @@ def download(name: str, url: str, expected: str) -> None:
     partial = MODELS / (name + ".part")
     for attempt in range(4):
         offset = partial.stat().st_size if partial.exists() else 0
+        if offset > expected_size:
+            raise RuntimeError(f"Partial download exceeds expected file size; inspect and remove: {partial}")
         try:
             with requests.get(url, stream=True, timeout=(30, 120),
                               headers={"Range": f"bytes={offset}-"} if offset else {},
@@ -50,14 +54,20 @@ def download(name: str, url: str, expected: str) -> None:
                     for chunk in response.iter_content(chunk_size=1024 * 1024):
                         if chunk:
                             output.write(chunk)
+            received = partial.stat().st_size
+            if received < expected_size:
+                raise requests.ConnectionError(f"Incomplete download: {received:,}/{expected_size:,} bytes; resuming")
+            if received > expected_size:
+                raise RuntimeError(f"Downloaded file exceeds pinned size; inspect and remove: {partial}")
             if digest(partial) != expected:
-                raise RuntimeError(f"SHA-256 mismatch for {name}; delete .part before retrying")
+                raise RuntimeError(f"Complete file SHA-256 mismatch for {name}; inspect and remove: {partial}")
             partial.replace(destination)
             print(f"OK: {name} ({destination.stat().st_size:,} bytes)", flush=True)
             return
         except requests.RequestException as exc:
             if attempt == 3:
-                raise RuntimeError(f"Download failed for {name}: {exc}") from exc
+                raise RuntimeError(f"Download incomplete/failed for {name}: {exc}. "
+                                   f"Rerun install.ps1 to resume {partial}, or use a trusted copy with the pinned SHA-256.") from exc
             print(f"Retrying {name} from {partial.stat().st_size if partial.exists() else 0} bytes: {exc}", flush=True)
             time.sleep(2 * (attempt + 1))
 
@@ -66,7 +76,7 @@ def main() -> None:
     MODELS.mkdir(exist_ok=True)
     for name, (url, checksum) in ASSETS.items():
         print(f"Checking {name} from {url}", flush=True)
-        download(name, url, checksum)
+        download(name, url, checksum, SIZES[name])
     print("Public model assets ready. Enamine stock/catalog require a separate SDF and are not included.")
 
 
