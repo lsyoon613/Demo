@@ -6,6 +6,17 @@ An independent **local Windows app** for route discovery, PubChem identity resol
 
 ## Minimum working install (Windows 10/11)
 
+### Download, extract, double-click
+
+1. Download [Demo-main.zip](https://github.com/lsyoon613/Demo/archive/refs/heads/main.zip) and **extract the whole ZIP** to a folder (do not run files inside the ZIP viewer).
+2. Double-click **`start.bat`** in that folder.
+3. A console opens. On first launch it installs dependencies, restores Enamine data, and downloads public models. If Python 3.11 is missing, it attempts installation using Windows Package Manager (`winget`). Keep the console open and allow several minutes with internet access.
+4. Once ready, the local server starts and opens your browser at **http://127.0.0.1:8502**. Later launches reuse the installation. Keep the console open while using the app; Ctrl+C stops the server. Startup failures remain visible in the console.
+
+If Windows Package Manager is unavailable, install 64-bit Python 3.11 from python.org once and double-click `start.bat` again. ASKCOS and AMES remain optional separate installations described below.
+
+### Command-line installation (optional)
+
 Install **64-bit Python 3.11**, have at least **3 GB free for model downloads** (more for Python dependencies), internet access for first install and PubChem lookups, then run in PowerShell. The installer detects standard `py -3.11`, uv-registered CPython 3.11, or `python` on PATH; alternatively set `SYNTHESIS_PYTHON311` to the full path of your Python 3.11 executable:
 
 ```powershell
