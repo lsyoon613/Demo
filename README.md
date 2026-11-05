@@ -6,11 +6,11 @@ An independent **local Windows app** for route discovery, PubChem identity resol
 
 ## Minimum working install (Windows 10/11)
 
-Install **64-bit Python 3.11** with the `py` launcher, have at least **3 GB free for model downloads** (more for Python dependencies), internet access for first install and PubChem lookups, then run in PowerShell:
+Install **64-bit Python 3.11**, have at least **3 GB free for model downloads** (more for Python dependencies), internet access for first install and PubChem lookups, then run in PowerShell. The installer detects standard `py -3.11`, uv-registered CPython 3.11, or `python` on PATH; alternatively set `SYNTHESIS_PYTHON311` to the full path of your Python 3.11 executable:
 
 ```powershell
-git clone https://github.com/lsyoon613/synthesis-route-integrated-review.git
-cd synthesis-route-integrated-review
+git clone https://github.com/lsyoon613/Demo.git
+cd Demo
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 .\start.bat
 ```
@@ -26,7 +26,7 @@ Start with a PubChem name such as `aspirin`, a CAS number `50-78-2`, or a SMILES
 | Feature | Separate preparation | When absent |
 | --- | --- | --- |
 | Local ASKCOS condition, forward and impurity prediction | WSL2 Ubuntu with Docker Engine and an [ASKCOSv2 local deployment](https://askcos-docs.mit.edu/guide/4-Deployment/4.1-Customizing-local-deployment.html). Enable gateway and **QUARC, WLDN5 forward, Impurity Predictor, Fast Filter** on `http://127.0.0.1:9100`. Check <http://127.0.0.1:9100/docs>. Upstream [standalone module guide](https://askcos-docs.mit.edu/guide/4-Deployment/4.2-Standalone-deployment-of-individual-modules.html). ASKCOS assets/containers are not bundled with this repo; the service API address is currently local and fixed. | Prediction calls report failure; route search and HTML export still work. |
-| ADMET-AI AMES | `py -3.11 -m venv .admet-venv` then `.\.admet-venv\Scripts\python.exe -m pip install -r requirements-admet.txt` (independent environment, model downloads may occur at first prediction). | AMES unavailable, no safety determination. |
+| ADMET-AI AMES | `.\.venv\Scripts\python.exe -m venv .admet-venv` then `.\.admet-venv\Scripts\python.exe -m pip install -r requirements-admet.txt` (independent environment, model downloads may occur at first prediction). | AMES unavailable, no safety determination. |
 | Full Enamine stock and price matching | Obtain the Enamine building-block SDF under its distributor terms. Run `.\.venv\Scripts\python.exe price_db\build_catalog_db.py --sdf "C:\path\to\Enamine.sdf"` then `.\.venv\Scripts\python.exe price_db\export_aizynth_stock.py`. This builds `price_db/catalog.sqlite` and `price_db/enamine_inchikeys.txt` **once**, not for every request; ~1.17 million structures may take time and disk space. Optional private `price_db/enamine_quotes.csv` follows columns `catalog_id,package_amount,package_unit,currency,package_price,availability,url,retrieved_at_utc`; rebuild or run `price_db/refresh_quotes.py` to import quotes. | ZINC search works; Enamine purchasing/price/stock status is **unverified**, not zero or unavailable. |
 
 The Enamine SDF, indexed database and historical quote files are deliberately **not published** here. Enamine's price coverage in the developer's local database was a small sample; prices are never invented. The ZINC stock is a route-search stock, not a price database. If you use `price_db/refresh_quotes.py`, run it only after a catalog has been built and you have your own quotes CSV. No Reaxys subscription/database is needed.
@@ -67,4 +67,4 @@ AMES tables label each scored structure as route reactant/intermediate, ASKCOS d
 
 Paste the repository URL and request: “Read README.md, install the Windows Python 3.11 core with `install.ps1`, run `doctor.py`, run unit tests, start the app and verify ZINC aspirin search. Ask me for the separately obtained Enamine SDF only if I want Enamine catalog/quote features. Set up local ASKCOS and ADMET-AI separately if full impurity/AMES analysis is requested.”
 
-**Repository note:** replace the clone URL above with the actual public repository URL if you choose another name. This upload-ready folder is a standalone repository root; do not upload `.venv`, `models/`, `price_db/catalog.sqlite`, Enamine SDF, or raw user quotes.
+**Repository note:** this repository does not include `.venv`, `models/`, `price_db/catalog.sqlite`, Enamine SDF, or raw user quotes.

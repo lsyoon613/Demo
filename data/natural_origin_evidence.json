@@ -1,0 +1,18 @@
+[
+  {
+    "name": "10-Deacetylbaccatin III",
+    "pubchem_cid": 154272,
+    "inchikey": "YWLXLRUDGLRYDR-ZHPRIASZSA-N",
+    "origin": "natural_taxus_extract",
+    "evidence_url": "https://www.epa.gov/greenchemistry/presidential-green-chemistry-challenge-2004-greener-synthetic-pathways-award",
+    "evidence_summary": "EPA documents extraction of 10-DAB from Taxus baccata leaves/twigs and semisynthesis of paclitaxel from it. Exact structure only."
+  },
+  {
+    "name": "Salicylic acid",
+    "pubchem_cid": 338,
+    "inchikey": "YGSDEFSMJLZEOE-UHFFFAOYSA-N",
+    "origin": "documented_natural_occurrence",
+    "evidence_url": "https://pubchem.ncbi.nlm.nih.gov/compound/338",
+    "evidence_summary": "PubChem cites ChEBI for salicylic acid occurrence in white willow bark and wintergreen leaves. Natural occurrence does not establish that the salicylic acid supplied for any aspirin route was extracted; chemical synthesis of salicylic acid is also documented."
+  }
+]

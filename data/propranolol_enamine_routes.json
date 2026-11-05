@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0",
+  "routes": [
+    {
+      "id": "aizynth-1",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N1CC(O)C1",
+            "Oc1cccc2ccccc12"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-2",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N",
+            "c1ccc2c(OCC3CO3)cccc2c1"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-3",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N",
+            "OC(CCl)COc1cccc2ccccc12"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-4",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "c1ccc2ccccc2c1",
+            "CC(C)NCC(O)CO"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-5",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N",
+            "OCC(O)COc1cccc2ccccc12"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-6",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)I",
+            "NCC(O)COc1cccc2ccccc12"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-7",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N(CC(O)COc1cccc2ccccc12)C(=O)OCc1ccccc1"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "aizynth-8",
+      "target": "CC(C)NCC(O)COc1cccc2ccccc12",
+      "source": "AiZynthFinder live search (enamine 재고; 시약·용매·부산물 정보 미제공)",
+      "steps": [
+        {
+          "id": "1",
+          "reactants": [
+            "CC(C)N",
+            "ClCC1CO1",
+            "Oc1cccc2ccccc12"
+          ],
+          "products": [
+            "CC(C)NCC(O)COc1cccc2ccccc12"
+          ],
+          "reagents": [],
+          "solvents": [],
+          "conditions": {
+            "status": "unknown"
+          },
+          "byproducts": {
+            "status": "not_run",
+            "candidates": []
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+[
+  {
+    "compound": "propranolol",
+    "html": "Propranolol_CID4946_AQHHHDLHHXJYJD_aizynth-1.html",
+    "json": "Propranolol_CID4946_AQHHHDLHHXJYJD_aizynth-1.json",
+    "steps": 1,
+    "route_id": "aizynth-1",
+    "module_statuses": [
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      }
+    ],
+    "propagation_status": "completed",
+    "propagation_traces": 0,
+    "origin_status": "origin_unknown",
+    "ndma_status": "not_established",
+    "ames_status": "success",
+    "ames_inputs": 12,
+    "stock": "Enamine (2026-09)"
+  },
+  {
+    "compound": "paclitaxel",
+    "html": "Paclitaxel_CID36314_RCINICONZNJXQF_aizynth-1.html",
+    "json": "Paclitaxel_CID36314_RCINICONZNJXQF_aizynth-1.json",
+    "steps": 5,
+    "route_id": "aizynth-1",
+    "module_statuses": [
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      }
+    ],
+    "propagation_status": "completed",
+    "propagation_traces": 8,
+    "origin_status": "origin_review_required",
+    "ndma_status": "not_established",
+    "ames_status": "success",
+    "ames_inputs": 24,
+    "stock": "Enamine (2026-09)"
+  },
+  {
+    "compound": "valsartan",
+    "html": "Valsartan_CID60846_ACWBQPMHZXGDFX_aizynth-1.html",
+    "json": "Valsartan_CID60846_ACWBQPMHZXGDFX_aizynth-1.json",
+    "steps": 3,
+    "route_id": "aizynth-1",
+    "module_statuses": [
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      }
+    ],
+    "propagation_status": "completed",
+    "propagation_traces": 4,
+    "origin_status": "origin_unknown",
+    "ndma_status": "not_established",
+    "ames_status": "success",
+    "ames_inputs": 24,
+    "stock": "ZINC"
+  },
+  {
+    "compound": "propranolol",
+    "stock": "ZINC",
+    "html": "Propranolol_CID4946_AQHHHDLHHXJYJD_aizynth-4_ZINC.html",
+    "json": "Propranolol_CID4946_AQHHHDLHHXJYJD_aizynth-4_ZINC.json",
+    "steps": 3,
+    "route_id": "aizynth-4",
+    "module_statuses": [
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      },
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      }
+    ],
+    "propagation_status": "completed",
+    "propagation_traces": 4,
+    "origin_status": "origin_unknown",
+    "ndma_status": "not_established",
+    "ames_status": "success",
+    "ames_inputs": 28
+  },
+  {
+    "compound": "metoprolol",
+    "stock": "Enamine (2026-09)",
+    "html": "Metoprolol_CID4171_IUBSYMUCCVWXPE_aizynth-1.html",
+    "json": "Metoprolol_CID4171_IUBSYMUCCVWXPE_aizynth-1.json",
+    "steps": 1,
+    "route_id": "aizynth-1",
+    "module_statuses": [
+      {
+        "context": "success",
+        "forward": "success",
+        "impurity": "success"
+      }
+    ],
+    "propagation_status": "completed",
+    "propagation_traces": 0,
+    "origin_status": "origin_unknown",
+    "ndma_status": "not_established",
+    "ames_status": "success",
+    "ames_inputs": 16
+  }
+]
