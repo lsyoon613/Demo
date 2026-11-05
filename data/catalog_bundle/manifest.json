@@ -1,0 +1,38 @@
+{
+  "format": "enamine-catalog-zip-v1",
+  "archive_sha256": "e6968f112c434804aafa9f9c6041326769a86fdd06e2ffaea92c3bb190c73f83",
+  "stock_rows": 1173509,
+  "quote_rows": 3908,
+  "files": {
+    "catalog.sqlite": {
+      "size": 332165120,
+      "sha256": "5c2817799e77037879bc8338b80b1a12b5ea6a8d4818763146fe3759fcd64261"
+    },
+    "enamine_inchikeys.txt": {
+      "size": 33979532,
+      "sha256": "3118504417292bfdfa173cd76994ee456b79dd8f0812cb4da8efbd35468fa89a"
+    },
+    "enamine_quotes.csv": {
+      "size": 365229,
+      "sha256": "015369fe91b6688f6554914db031448950ce133fbb81a11e171bb0b6e14c9399"
+    }
+  },
+  "parts": [
+    {
+      "name": "part-001.bin",
+      "size": 33554432,
+      "sha256": "b3846edb8aca7292f3adf2d1bd1cfbfe5bbee6efccffaa9d80028fbfc1a56dfd"
+    },
+    {
+      "name": "part-002.bin",
+      "size": 33554432,
+      "sha256": "728d06588bd5ad0cdb6f7ed4a3d7f9f920b7b735e9aadbedf129d229b9b8fe26"
+    },
+    {
+      "name": "part-003.bin",
+      "size": 32040275,
+      "sha256": "838a75689764f67ca7106848f39d45c042228f541d4bd0618eb19f768cd8c2f3"
+    }
+  ],
+  "note": "Exact-structure stock snapshot; quote coverage is partial and dated."
+}

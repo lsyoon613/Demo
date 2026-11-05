@@ -15,7 +15,6 @@ import subprocess
 import requests
 from rdkit import Chem
 import natural_origin
-import remote_enamine
 
 ROOT = Path(__file__).resolve().parent.parent
 DB = ROOT / "price_db" / "catalog.sqlite"
@@ -80,13 +79,6 @@ def search(target: str, stock_name="Enamine (2026-09)", time_limit=30, iteration
         raise ValueError("지원하지 않는 재고입니다")
     if not 1 <= time_limit <= 120 or not 1 <= iteration_limit <= 200:
         raise ValueError("탐색 한도 범위 초과")
-    if stock_name == "Enamine (2026-09)" and remote_enamine.configured():
-        return remote_enamine.search(target, stock_name, time_limit, iteration_limit)
-    return _search_local(target, stock_name, time_limit, iteration_limit)
-
-
-def _search_local(target: str, stock_name: str, time_limit: int, iteration_limit: int) -> list[dict]:
-    """Private gateway/local search implementation; never forwards gateway calls back to itself."""
     models = ROOT / "models"
     needed = [models / "uspto_model.onnx", models / "uspto_templates.csv.gz",
               models / "uspto_filter_model.onnx", STOCKS[stock_name]]
@@ -195,20 +187,17 @@ def compare(target: str, routes: list[dict], natural_start="", extraction_refere
     target = canonical(target)
     natural = canonical(natural_start) if natural_start.strip() else None
     occurrence_evidence = occurrence_evidence or {}
-    remote = remote_enamine.configured()
-    remote_records = (remote_enamine.catalog([target] + [s for route in routes for s in route_leaves(route)])
-                      if remote else {})
     db_connection = (sqlite3.connect(f"file:{DB.resolve().as_posix()}?mode=ro", uri=True)
-                     if DB.is_file() and not remote else sqlite3.connect(":memory:"))
+                     if DB.is_file() else sqlite3.connect(":memory:"))
     with closing(db_connection) as db:
-        if not DB.is_file() or remote:
+        if not DB.is_file():
             db.executescript("CREATE TABLE stock (catalog_id TEXT, inchikey TEXT, smiles TEXT, url TEXT); "
                               "CREATE TABLE quotes (catalog_id TEXT, package_amount REAL, package_unit TEXT, "
                               "currency TEXT, package_price REAL, availability TEXT, observed_at TEXT, source TEXT);")
-        purchase = remote_records[target] if remote else lookup(target, db)
+        purchase = lookup(target, db)
         results = []
         for route in routes:
-            leaves = [remote_records[s] if remote else lookup(s, db) for s in route_leaves(route)]
+            leaves = [lookup(s, db) for s in route_leaves(route)]
             for leaf in leaves:
                 leaf["origin"] = natural_origin.leaf_origin(
                     leaf["smiles"], annotated_smiles=natural or "", annotated_reference=natural_reference,
@@ -249,8 +238,8 @@ def compare(target: str, routes: list[dict], natural_start="", extraction_refere
     return {"target": target, "purchase": purchase,
             "extraction": {"status": "제공 근거 검토 필요" if extraction_reference.strip() else "근거 없음",
                            "reference": extraction_reference.strip()}, "routes": results, "next_check": recommendation,
-            "catalog_status": "remote_catalog_available" if remote else "local_snapshot_available" if DB.is_file() else "catalog_not_installed",
-            "note": ("Enamine 카탈로그 미설치 · 가격/구매 가능 여부 미확인. " if not remote and not DB.is_file() else "") +
+            "catalog_status": "local_snapshot_available" if DB.is_file() else "catalog_not_installed",
+            "note": ("Enamine 카탈로그 미설치 · 가격/구매 가능 여부 미확인. " if not DB.is_file() else "") +
                     "PubChem 구조·이름만으로 천연물 유래는 판정할 수 없습니다. 문헌/사용자 근거와 구조 유사성은 별도 표시하며, 근거가 없으면 전합성으로 단정하지 않습니다. 수율·소요량 없이 전체 경로 비용은 미산정입니다."}
 
 

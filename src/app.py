@@ -10,7 +10,6 @@ import route_views
 import identifiers
 import natural_origin
 import risk_flags
-import remote_enamine
 
 # Streamlit reruns app.py in a persistent interpreter. Refresh our own small
 # modules too, so editing an adapter cannot leave old functions in sys.modules.
@@ -36,10 +35,9 @@ st.caption("독립 연구 도구 · AiZynthFinder / Enamine 포장 견적 / 로�
 
 target = st.text_input("목표물 식별자 · SMILES / CAS / InChI / InChIKey / CID / 화합물명",
                        value="CC(C)NCC(O)COc1cccc2ccccc12")
-available_stocks = [name for name, path in service.STOCKS.items()
-                    if path.is_file() or name == "Enamine (2026-09)" and remote_enamine.configured()]
+available_stocks = [name for name, path in service.STOCKS.items() if path.is_file()]
 stock = st.selectbox("AiZynthFinder 탐색 재고", available_stocks or ["ZINC"])
-if not service.DB.is_file() and not remote_enamine.configured():
+if not service.DB.is_file():
     st.warning("Enamine 카탈로그 DB가 설치되지 않았습니다. 구조·가격 일치 여부는 미확인입니다. ZINC 경로 탐색은 모델 설치 후 사용할 수 있습니다.")
 if not available_stocks:
     st.info("탐색용 모델/재고를 먼저 설치하세요: python setup_models.py")

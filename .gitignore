@@ -13,5 +13,6 @@ verified_reports/
 models/*.part
 price_db/enamine_quotes.csv
 price_db/*.building.sqlite
+price_db/*.tmp
 price_db/enamine_errors.csv
 .streamlit/secrets.toml

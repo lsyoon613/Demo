@@ -2,14 +2,11 @@
 import importlib.metadata
 from pathlib import Path
 import subprocess
-import sys
 
 ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "src"))
 
 
 def main():
-    import remote_enamine
     for name in ("aizynthfinder", "streamlit", "rdkit", "admet-ai"):
         if name == "admet-ai":
             python = ROOT / ".admet-venv/Scripts/python.exe"
@@ -36,12 +33,6 @@ def main():
                         "USPTO templates": ROOT / "models/uspto_templates.csv.gz",
                         "USPTO filter model": ROOT / "models/uspto_filter_model.onnx"}.items():
         print(f"{name}: {'available' if path.is_file() else 'missing'} ({path})")
-    if remote_enamine.configured():
-        try:
-            remote_enamine.catalog([])
-            print("Remote Enamine gateway: authenticated catalog reachable")
-        except ValueError as exc:
-            print(f"Remote Enamine gateway: unavailable ({exc})")
     try:
         from urllib.request import urlopen
         with urlopen("http://127.0.0.1:9100/docs", timeout=3) as response:

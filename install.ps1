@@ -35,6 +35,8 @@ Write-Output "Using Python 3.11: $python311 $($arguments -join ' ')"
 & $python311 @arguments -m venv .venv
 if ($LASTEXITCODE -ne 0) { throw 'Python 3.11 virtual environment creation failed' }
 $python = Join-Path $PSScriptRoot '.venv\Scripts\python.exe'
+& $python -X utf8 setup_catalog.py
+if ($LASTEXITCODE -ne 0) { throw 'Bundled Enamine catalog restore/check failed' }
 & $python -m pip install --upgrade pip
 if ($LASTEXITCODE -ne 0) { throw 'pip upgrade failed' }
 & $python -m pip install -r requirements.txt
@@ -44,4 +46,4 @@ if ($LASTEXITCODE -ne 0) { throw 'Public model download/checksum verification fa
 & $python -X utf8 doctor.py
 Write-Output 'Core installation complete. Launch start.bat and visit http://localhost:8502.'
 Write-Output 'Optional AMES: .\.venv\Scripts\python.exe -m venv .admet-venv; .\.admet-venv\Scripts\python.exe -m pip install -r requirements-admet.txt'
-Write-Output 'Optional ASKCOS backend and Enamine SDF catalog: follow README.md.'
+Write-Output 'Optional ASKCOS backend: follow README.md. Enamine catalog is already installed locally.'

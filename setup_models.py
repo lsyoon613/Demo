@@ -77,7 +77,7 @@ def main() -> None:
     for name, (url, checksum) in ASSETS.items():
         print(f"Checking {name} from {url}", flush=True)
         download(name, url, checksum, SIZES[name])
-    print("Public model assets ready. Enamine stock/catalog require a separate SDF and are not included.")
+    print("Public model assets ready. Enamine stock/catalog are restored locally from the GitHub bundle by setup_catalog.py.")
 
 
 if __name__ == "__main__":
