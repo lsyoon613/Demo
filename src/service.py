@@ -276,6 +276,10 @@ def askcos_step(step: dict, modules=("context", "forward", "impurity"), base_url
                 row["status"] = "success"
             else:
                 row["error"] = "HTTP/API error or missing result"
+        except requests.ConnectionError as exc:
+            row["error"] = ("이 PC의 ASKCOS 계산 서버에 연결할 수 없습니다 (" + base_url +
+                            "). 앱 서버와 별도입니다. ASKCOS 설치 후 실행하세요: docs/ASKCOS_LOCAL.md")
+            row["diagnostic"] = str(exc)
         except (requests.RequestException, ValueError) as exc:
             row["error"] = str(exc)
         results[module] = row
@@ -294,6 +298,9 @@ def propagate_impurities(route: dict, step_calls: dict[int, dict], *, max_per_so
         raise ValueError("전파 한도 범위 초과")
     reagents = reagents or {}
     solvents = solvents or {}
+    if not any(call.get("impurity", {}).get("status") == "success" for call in step_calls.values()):
+        return {"status": "not_run", "traces": [],
+                "note": "성공한 ASKCOS 부산물 예측이 없어 전파 계산을 실행하지 못했습니다. 부산물 없음 또는 안전 판정이 아닙니다."}
     beams = {}
     traces = []
     attempted = set()

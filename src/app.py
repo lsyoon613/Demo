@@ -293,7 +293,8 @@ if routes:
     propagation = st.session_state.get("propagation", {}).get(selected, {})
     if propagation:
         st.write(f"**단계 간 부산물 전파 가정:** {len(propagation['traces'])}개 추가 시나리오 · " +
-                 ("설정 상한으로 중단" if propagation["status"] == "truncated" else "설정 범위 실행 완료"))
+                 ("실행하지 못함 · ASKCOS 결과 없음" if propagation["status"] == "not_run" else
+                  "설정 상한으로 중단" if propagation["status"] == "truncated" else "설정 범위 실행 완료"))
         st.caption(propagation["note"])
         st.dataframe([{"출처 단계": p["from_step"], "다음 단계": p["to_step"],
                        "대체한 중간체": p["parent_intermediate"], "가정 부산물": p["hypothetical_input"],

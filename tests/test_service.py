@@ -177,6 +177,9 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(result["forward"]["status"], "failed")
         self.assertEqual(result["forward"]["request"]["smiles"], ["CCO"])
         self.assertIsNone(result["forward"]["response"])
+        self.assertIn("ASKCOS 계산 서버", result["forward"]["error"])
+        propagation = service.propagate_impurities({"steps": [step]}, {0: result})
+        self.assertEqual(propagation["status"], "not_run")
 
     def test_askcos_candidates_exclude_target_and_failed_calls(self):
         results = {"0:0": {"impurity": {"status": "success", "response": {"result": {"predict_expand": [

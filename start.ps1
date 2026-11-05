@@ -12,7 +12,28 @@ if (-not $ready) {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'install.ps1')
     if ($LASTEXITCODE -ne 0) { throw 'Automatic installation failed. See the error above. Double-click start.bat to retry.' }
 }
-Write-Host 'Starting your local server. The browser opens automatically. Keep this window open.'
+$appPath = Join-Path $PSScriptRoot 'src\app.py'
+$port = 8502
+while ($port -le 8522) {
+    $listeners = @(Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue)
+    if ($listeners.Count -eq 0) { break }
+    foreach ($listener in $listeners) {
+        $process = Get-CimInstance Win32_Process -Filter "ProcessId = $($listener.OwningProcess)" -ErrorAction SilentlyContinue
+        if ($process.CommandLine -and $process.CommandLine.Contains($appPath) -and $process.CommandLine.Contains('streamlit')) {
+            try {
+                $health = Invoke-WebRequest "http://127.0.0.1:$port/_stcore/health" -UseBasicParsing -TimeoutSec 3
+                if ($health.StatusCode -eq 200 -and $health.Content.Trim() -eq 'ok') {
+                    Write-Host "This app is already running. Opening http://127.0.0.1:$port"
+                    Start-Process "http://127.0.0.1:$port"
+                    exit 0
+                }
+            } catch { }
+        }
+    }
+    $port++
+}
+if ($port -gt 8522) { throw 'No free local port in 8502-8522. Close an unused app server and retry.' }
+Write-Host "Starting your local server at http://127.0.0.1:$port . Keep this window open."
 $env:STREAMLIT_BROWSER_SERVER_ADDRESS = '127.0.0.1'
-& $python -m streamlit run "$PSScriptRoot\src\app.py" --server.address 127.0.0.1 --server.port 8502 --server.headless false
-if ($LASTEXITCODE -ne 0) { throw 'App failed to start. Check the error above (including whether port 8502 is already in use).' }
+& $python -m streamlit run $appPath --server.address 127.0.0.1 --server.port $port --server.headless false
+if ($LASTEXITCODE -ne 0) { throw 'App failed to start. See the error above.' }

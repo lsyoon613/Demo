@@ -11,9 +11,11 @@ An independent **local Windows app** for route discovery, PubChem identity resol
 1. Download [Demo-main.zip](https://github.com/lsyoon613/Demo/archive/refs/heads/main.zip) and **extract the whole ZIP** to a folder (do not run files inside the ZIP viewer).
 2. Double-click **`start.bat`** in that folder.
 3. A console opens. On first launch it installs dependencies, restores Enamine data, and downloads public models. If Python 3.11 is missing, it attempts installation using Windows Package Manager (`winget`). Keep the console open and allow several minutes with internet access.
-4. Once ready, the local server starts and opens your browser at **http://127.0.0.1:8502**. Later launches reuse the installation. Keep the console open while using the app; Ctrl+C stops the server. Startup failures remain visible in the console.
+4. Once ready, the local server starts and opens your browser at **http://127.0.0.1:8502**. Re-launching the same running app opens its existing browser address. If another program occupies that port, the launcher selects a free port between 8503 and 8522 and displays it. Later launches reuse the installation. Keep the console open while using the app; Ctrl+C stops the server. Startup failures remain visible in the console.
 
 If Windows Package Manager is unavailable, install 64-bit Python 3.11 from python.org once and double-click `start.bat` again. ASKCOS and AMES remain optional separate installations described below.
+
+**Impurity prediction is not included in first-run automatic setup.** If QUARC/WLDN5/Impurity Predictor show `127.0.0.1:9100` connection refused, the app is running but the separate ASKCOS server on that user's PC is not. See [ASKCOS connection/setup instructions](docs/ASKCOS_LOCAL.md). Failed source predictions are now labelled as propagation **not run**, rather than a completed zero-result analysis.
 
 ### Command-line installation (optional)
 
