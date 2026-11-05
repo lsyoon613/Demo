@@ -1,16 +1,17 @@
 # 공개 GitHub 저장소 올리기
 
-이 폴더가 **독립 저장소의 루트**입니다. 아직 GitHub 계정에 게시하지 않았습니다. `gh` CLI/인증이 이 PC에 없어 공개 저장소를 자동 생성할 수 없었습니다.
+이 폴더가 **독립 저장소의 루트**입니다. 공개 저장소는 <https://github.com/lsyoon613/Demo>이며, 게시 뒤 수정할 때는 기존 저장소에 업데이트하세요.
 
 1. 이 폴더의 게시 저장소는 <https://github.com/lsyoon613/Demo>입니다. 새 저장소를 다시 만들 필요는 없습니다.
-2. Windows PowerShell에서 이 폴더로 이동한 다음, 아래 명령을 실행합니다. GitHub 인증은 사용자가 Git Credential Manager 브라우저 창에서 완료합니다.
+2. 저장소를 새로 클론했다면 이후 수정 사항은 해당 클론에서 `git add`, `git commit`, `git push`로 갱신합니다. 브라우저에서 업로드할 때는 아래 모든 하위 폴더가 함께 올라갔는지 확인하세요.
 
 ```powershell
-git init -b main
-git remote add origin https://github.com/lsyoon613/Demo.git
+git clone https://github.com/lsyoon613/Demo.git
+cd Demo
+# 이 폴더의 변경 파일과 하위 폴더를 클론한 Demo 폴더로 복사한 뒤:
 git add .
 git status --short
-git commit -m "Release standalone synthesis route review"
+git commit -m "Update standalone synthesis route review"
 git push -u origin main
 ```
 
