@@ -10,12 +10,12 @@ An independent **local Windows app** for route discovery, PubChem identity resol
 
 1. Download [Demo-main.zip](https://github.com/lsyoon613/Demo/archive/refs/heads/main.zip) and **extract the whole ZIP** to a folder (do not run files inside the ZIP viewer).
 2. Double-click **`start.bat`** in that folder.
-3. A console opens. On first launch it installs dependencies, restores Enamine data, and downloads public models. If Python 3.11 is missing, it attempts installation using Windows Package Manager (`winget`). Keep the console open and allow several minutes with internet access.
+3. A console opens. On first launch it installs dependencies, restores Enamine data, downloads public models, then prepares **local ASKCOS and AMES**. If Python 3.11 is missing, it attempts installation using Windows Package Manager (`winget`). ASKCOS needs WSL2/Ubuntu/Docker; accept the Windows administrator prompt if installation is needed. If Windows requests a restart or Ubuntu initialization, complete it and double-click `start.bat` again. Full model/container setup requires multiple GB and can take a long time.
 4. Once ready, the local server starts and opens your browser at **http://127.0.0.1:8502**. Re-launching the same running app opens its existing browser address. If another program occupies that port, the launcher selects a free port between 8503 and 8522 and displays it. Later launches reuse the installation. Keep the console open while using the app; Ctrl+C stops the server. Startup failures remain visible in the console.
 
-If Windows Package Manager is unavailable, install 64-bit Python 3.11 from python.org once and double-click `start.bat` again. ASKCOS and AMES remain optional separate installations described below.
+If Windows Package Manager is unavailable, install 64-bit Python 3.11 from python.org once and double-click `start.bat` again. See [full backend preparation and troubleshooting](docs/ASKCOS_LOCAL.md).
 
-**Impurity prediction is not included in first-run automatic setup.** If QUARC/WLDN5/Impurity Predictor show `127.0.0.1:9100` connection refused, the app is running but the separate ASKCOS server on that user's PC is not. See [ASKCOS connection/setup instructions](docs/ASKCOS_LOCAL.md). Failed source predictions are now labelled as propagation **not run**, rather than a completed zero-result analysis.
+`start.bat` now runs `setup_full.ps1` before opening the app. It checks all five required ASKCOS modules and warms up AMES with real inference. A setup failure remains visible in the console instead of claiming full readiness. `install.ps1` alone prepares only the core; use `start.bat` for the full workflow. The first fresh WSL installation may require a restart; the script cannot bypass Windows virtualization requirements.
 
 ### Command-line installation (optional)
 
@@ -28,7 +28,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 .\start.bat
 ```
 
-Open <http://localhost:8502>. `install.ps1` creates `.venv`, **restores Enamine stock, SQLite catalog and dated quote CSV locally from the bundled 3-part archive (~99 MB)** and checks hashes/SQLite integrity. It then installs pinned AiZynthFinder 4.4.1 and app dependencies, downloads the **public** USPTO expansion/filter/template files and ZINC stock into `models/`, and checks SHA-256. Public model downloads total roughly **775 MB**; `setup_models.py` resumes interrupted transfers. `start.bat` starts Streamlit on localhost. If cloned under a different repository name, use that directory in the `cd` command. ASKCOS installation is separate.
+`install.ps1` creates `.venv`, **restores Enamine stock, SQLite catalog and dated quote CSV locally from the bundled 3-part archive (~99 MB)** and checks hashes/SQLite integrity. It then installs pinned AiZynthFinder 4.4.1 and app dependencies, downloads the **public** USPTO expansion/filter/template files and ZINC stock into `models/`, and checks SHA-256. These core model downloads total roughly **775 MB**; `setup_models.py` resumes interrupted transfers. `start.bat` additionally prepares ASKCOS/AMES and opens Streamlit at the available localhost port shown in the console. If cloned under a different repository name, use that directory in the `cd` command.
 
 If a model download is interrupted, rerun `install.ps1`: the `.part` file resumes with HTTP Range requests and is never treated as a verified model until its pinned size and SHA-256 match. Repeated incomplete downloads indicate a network/CDN issue; `setup_models.py` lists the public source URLs and pinned checksums if you need to obtain verified assets over a different connection.
 
@@ -36,14 +36,16 @@ If a model download is interrupted, rerun `install.ps1`: the `.part` file resume
 
 Start with a PubChem name such as `aspirin`, a CAS number `50-78-2`, or a SMILES. Select **Enamine (2026-09)** or **ZINC** then **새 경로 탐색**. The `doctor.py` check distinguishes missing optional services. If PubChem is offline, SMILES/InChI still work through RDKit; names/CAS/InChIKey require lookup. The **stored propranolol example** loads without a model search.
 
-## Optional components for full functionality
+## Prediction backends prepared by setup_full.ps1
+
+`start.bat` automatically invokes the full setup below after the core install. The table documents the underlying components and manual references, not additional commands required during a successful automatic setup.
 
 Enamine route search and stock/price matching now run **locally**. The repository includes a consistent snapshot indexed from 1,173,509 structurally parsed products. The SQLite snapshot holds **3,908 observed package quote records** with timestamps/sources for a limited subset of products; the included supplementary CSV holds **3,042** of these collected quote records. Unquoted products have unknown prices, not $0. These are noncommercial academic research snapshots for the Department of AI-Based Drug Development, Duksung Women's University; reconfirm price and availability before ordering. Neither PubChem nor COCONUT requires a local bulk download.
 
-| Feature | Separate preparation | When absent |
+| Feature | Automatic preparation | When absent |
 | --- | --- | --- |
-| Local ASKCOS condition, forward and impurity prediction | WSL2 Ubuntu with Docker Engine and an [ASKCOSv2 local deployment](https://askcos-docs.mit.edu/guide/4-Deployment/4.1-Customizing-local-deployment.html). Enable gateway and **QUARC, WLDN5 forward, Impurity Predictor, Fast Filter** on `http://127.0.0.1:9100`. Check <http://127.0.0.1:9100/docs>. Upstream [standalone module guide](https://askcos-docs.mit.edu/guide/4-Deployment/4.2-Standalone-deployment-of-individual-modules.html). ASKCOS assets/containers are not bundled with this repo; the service API address is currently local and fixed. | Prediction calls report failure; route search and HTML export still work. |
-| ADMET-AI AMES | `.\.venv\Scripts\python.exe -m venv .admet-venv` then `.\.admet-venv\Scripts\python.exe -m pip install -r requirements-admet.txt` (independent environment, model downloads may occur at first prediction). | AMES unavailable, no safety determination. |
+| Local ASKCOS condition, forward and impurity prediction | `setup_full.ps1` prepares WSL2 Ubuntu/Docker, downloads pinned upstream sources and QUARC assets, builds CPU containers, and checks **QUARC, WLDN5, Impurity Predictor, Fast Filter, Indigo** at `http://127.0.0.1:9100`. A ready existing server is reused. | Full startup stops with the preparation error. |
+| ADMET-AI AMES | `setup_full.ps1` creates `.admet-venv`, installs `requirements-admet.txt`, and verifies one real prediction before recording completion. | Full startup stops with the installation/inference error. |
 
 The **raw 2.34 GB Enamine SDF is not needed to run this app** and is not included; only the indexed DB, stock file and observed quote CSV are bundled in compressed parts, restored during installation. The ZINC stock is a route-search stock, not a price database. To rebuild the DB from a newly acquired SDF or update quotes, use `price_db/build_catalog_db.py`, `price_db/export_aizynth_stock.py`, and `price_db/refresh_quotes.py`. To publish a refreshed snapshot use `scripts/build_catalog_bundle.py --source price_db --out <new-empty-directory>` and review the generated manifest before replacing the bundle. No Reaxys subscription/database is needed.
 
@@ -81,6 +83,6 @@ AMES tables label each scored structure as route reactant/intermediate, ASKCOS d
 
 ## For an installation agent (Codex)
 
-Paste the repository URL and request: “Read README.md, install the Windows Python 3.11 core with `install.ps1`, check that `setup_catalog.py` restored the Enamine catalog, run `doctor.py` and unit tests, start the app and verify both Enamine and ZINC aspirin search. Set up local ASKCOS and ADMET-AI separately if full impurity/AMES analysis is requested.”
+Paste the repository URL and request: “Read README.md, run `start.bat` to prepare the core plus ASKCOS and AMES, handle a required Windows restart by resuming afterward, check `doctor.py` and unit tests, then verify Enamine/ZINC route search and actual ASKCOS/AMES inference. Do not label missing backends as successful setup.”
 
 **Repository note:** the three versioned `data/catalog_bundle/part-*.bin` files contain an extractable copy of the indexed Enamine catalog and dated quote data. `.venv`, public model binaries and raw SDF remain outside Git.

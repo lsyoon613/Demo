@@ -12,6 +12,8 @@ if (-not $ready) {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'install.ps1')
     if ($LASTEXITCODE -ne 0) { throw 'Automatic installation failed. See the error above. Double-click start.bat to retry.' }
 }
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'setup_full.ps1')
+if ($LASTEXITCODE -ne 0) { throw 'Full prediction setup is incomplete. See the error above; retry start.bat after resolving it.' }
 $appPath = Join-Path $PSScriptRoot 'src\app.py'
 $port = 8502
 while ($port -le 8522) {

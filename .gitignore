@@ -16,3 +16,8 @@ price_db/*.building.sqlite
 price_db/*.tmp
 price_db/enamine_errors.csv
 .streamlit/secrets.toml
+backends/askcos/ASKCOSv2/
+backends/askcos/downloads/
+backends/askcos/dockerfiles/
+backends/askcos/.env
+backends/askcos/keeper.json

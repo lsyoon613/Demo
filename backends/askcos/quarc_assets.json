@@ -1,0 +1,47 @@
+{
+  "vocabulary_source_commit": "9bf978f13b4056ce55a64731f7bb974dbcfe9b7c",
+  "files": [
+    {
+      "url": "https://www.dropbox.com/scl/fi/5hxd7ir4wj0p5nuflxpf3/gnn_agent_model_oss.ckpt?rlkey=m9mfxssehx9xe324fhszzpy4y&st=05pescoj&dl=1",
+      "file": "ASKCOSv2\\context_quarc\\checkpoints\\gnn_agent_model.ckpt",
+      "bytes": 69717701,
+      "sha256": "4cc9c1195fe1ebc948f479ab362d5ef87ef0ebc0121751880505df99d58442a3"
+    },
+    {
+      "url": "https://www.dropbox.com/scl/fi/v2vswiy4l1hte38e81sij/ffn_temperature_model.ckpt?rlkey=9zajegwnlar3rfokejkizwz6j&st=wx1w4dyd&dl=1",
+      "file": "ASKCOSv2\\context_quarc\\checkpoints\\ffn_temperature_model.ckpt",
+      "bytes": 387402784,
+      "sha256": "4932facde9172d7288fabc787f2790b109c3e8a1f32feef11e90f4be0032bd65"
+    },
+    {
+      "url": "https://www.dropbox.com/scl/fi/3f1lm61uurdpk30cvrbqo/ffn_reactant_amount_model.ckpt?rlkey=ix869p7i98bg1j5bp1dvt5vqe&st=w1q3rep4&dl=1",
+      "file": "ASKCOSv2\\context_quarc\\checkpoints\\ffn_reactant_amount_model.ckpt",
+      "bytes": 235675227,
+      "sha256": "b97f87167739be1a9692793e20b73905aad061242b5ebf8ffa117e205fbc767a"
+    },
+    {
+      "url": "https://www.dropbox.com/scl/fi/mt9vsiql4e4p5df7y9adh/ffn_agent_amount_model.ckpt?rlkey=232i309za50w8epgyk29kic3w&st=bib02ht9&dl=1",
+      "file": "ASKCOSv2\\context_quarc\\checkpoints\\ffn_agent_amount_model.ckpt",
+      "bytes": 1148878443,
+      "sha256": "f8b9942f0fd23ebcea0b63b3b74832c39055b46035fe5fd4db3495f1ec0d5cdb"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Xiaoqi-Sun/quarc-oss/9bf978f13b4056ce55a64731f7bb974dbcfe9b7c/data/processed/agent_encoder/agent_encoder_list.json",
+      "file": "ASKCOSv2\\context_quarc\\data\\processed\\agent_encoder\\agent_encoder_list.json",
+      "bytes": 44084,
+      "sha256": "936ce27ba5f220a6d202e3fa38474d7339d2af21436d4746b5c3f9f6a25ace24"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Xiaoqi-Sun/quarc-oss/9bf978f13b4056ce55a64731f7bb974dbcfe9b7c/data/processed/agent_encoder/agent_other_dict.json",
+      "file": "ASKCOSv2\\context_quarc\\data\\processed\\agent_encoder\\agent_other_dict.json",
+      "bytes": 104092,
+      "sha256": "4cd3eea2c95bb0d6cbc4dceb3aba223c93e688035efb974337add3b8b8663ba7"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Xiaoqi-Sun/quarc-oss/9bf978f13b4056ce55a64731f7bb974dbcfe9b7c/data/processed/agent_encoder/agent_rules_v1.json",
+      "file": "ASKCOSv2\\context_quarc\\data\\processed\\agent_encoder\\agent_rules_v1.json",
+      "bytes": 10045,
+      "sha256": "bafacf5b334a2333ec2a70d895f509e1b6513eb37011edb3e31d82c4471a4b99"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "askcos2_core": "f546f39f8352710a685e1515ea19e702737d7070",
+  "forward_predictor/wldn5": "79ad8e1a62b273737face3b5060fdf0697d412f1",
+  "impurity_predictor": "e898f1859965103bd744247eaf988447cbd795bf",
+  "fast_filter": "c627bae6b5edc6a519c92590218d5be9d0f989a0",
+  "atom_map/indigo": "f4d6141c0e38b0b5b5109d7ff45b59e6a9a67fa3",
+  "context_quarc": "c3f1550b347ba0f7fa57cf37e18d36bd74d77f8b"
+}

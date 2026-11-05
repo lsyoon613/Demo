@@ -1,0 +1,87 @@
+name: demo-askcos
+services:
+  mongo:
+    image: mongo:6.0.9-jammy
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: askcos
+      MONGO_INITDB_ROOT_PASSWORD: ${LOCAL_MONGO_PASSWORD:?Run prepare_local.py first}
+    volumes:
+    - mongo_data:/data/db
+    command:
+    - --wiredTigerCacheSizeGB
+    - '0.5'
+    restart: unless-stopped
+  gateway:
+    image: demo-askcos/gateway:local
+    build:
+      context: ./ASKCOSv2/askcos2_core
+      dockerfile: ../../dockerfiles/gateway.Dockerfile
+    environment:
+      MODULE_CONFIG_PATH: configs/module_config_local.py
+      MONGO_HOST: mongo
+      MONGO_PORT: '27017'
+      MONGO_USER: askcos
+      MONGO_PW: ${LOCAL_MONGO_PASSWORD}
+      OAUTH2_SECRET_KEY: ${LOCAL_OAUTH_SECRET}
+      GATEWAY_URL: http://gateway:9100
+    volumes:
+    - ./module_config_local.py:/ASKCOSv2/askcos2_core/configs/module_config_local.py:ro
+    ports:
+    - 127.0.0.1:9100:9100
+    depends_on:
+    - mongo
+    restart: unless-stopped
+  forward:
+    image: demo-askcos/forward:local
+    build:
+      context: ./ASKCOSv2/forward_predictor/wldn5
+      dockerfile: ../../../dockerfiles/forward.Dockerfile
+    environment:
+      OMP_NUM_THREADS: '2'
+      TF_NUM_INTRAOP_THREADS: '2'
+      TF_NUM_INTEROP_THREADS: '2'
+    restart: unless-stopped
+  filter:
+    image: demo-askcos/filter:local
+    build:
+      context: ./ASKCOSv2/fast_filter
+      dockerfile: ../../dockerfiles/filter.Dockerfile
+    environment:
+      OMP_NUM_THREADS: '2'
+      TF_NUM_INTRAOP_THREADS: '2'
+      TF_NUM_INTEROP_THREADS: '2'
+    restart: unless-stopped
+  impurity:
+    image: demo-askcos/impurity:local
+    build:
+      context: ./ASKCOSv2/impurity_predictor
+      dockerfile: ../../dockerfiles/impurity.Dockerfile
+    environment:
+      GATEWAY_URL: http://gateway:9100
+    restart: unless-stopped
+  indigo:
+    image: demo-askcos/indigo:local
+    build:
+      context: ./ASKCOSv2/atom_map/indigo
+      dockerfile: ../../../dockerfiles/indigo.Dockerfile
+    restart: unless-stopped
+  context:
+    image: demo-askcos/context:local
+    build:
+      context: ./ASKCOSv2/context_quarc
+      dockerfile: ../../dockerfiles/context.Dockerfile
+    environment:
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    command:
+    - python
+    - quarc_server.py
+    - --config-path
+    - /app/quarc/configs/hybrid_pipeline_oss.yaml
+    - --processed-data-dir
+    - /app/quarc/data/processed
+    volumes:
+    - ./ASKCOSv2/context_quarc/checkpoints:/app/quarc/checkpoints:ro
+    restart: unless-stopped
+volumes:
+  mongo_data: null
