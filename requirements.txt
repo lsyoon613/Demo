@@ -1,0 +1,4 @@
+aizynthfinder==4.4.1
+streamlit>=1.43,<2
+requests>=2.31,<3
+pyarrow==25.0.1

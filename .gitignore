@@ -1,0 +1,17 @@
+.venv/
+.admet-venv/
+__pycache__/
+runs/
+models/
+price_db/catalog.sqlite
+price_db/enamine_inchikeys.txt
+price_db/enamine_stock_index.csv.gz
+data/kb_price_comparison.csv
+verified_reports/
+*.sdf
+*.sdf.gz
+models/*.part
+price_db/enamine_quotes.csv
+price_db/*.building.sqlite
+price_db/enamine_errors.csv
+.streamlit/secrets.toml
